@@ -30,6 +30,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-tg-bg text-tg-text">
+      <div style={{color:'lime', fontSize:20, padding:10}}>APP RENDER OK — hash: {window.location.hash || '(empty)'}</div>
       <ErrorBoundary>
         <Routes>
           <Route path="/" element={<Home />} />
