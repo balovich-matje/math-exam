@@ -8,22 +8,33 @@ const defaultProgress: TopicProgress = {
   test: { answers: {}, score: 0, completedAt: null },
 }
 
-export function getProgress(): TopicProgress {
+function getAllProgress(): Record<string, TopicProgress> {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return { ...defaultProgress }
-    return JSON.parse(raw) as TopicProgress
+    if (!raw) return {}
+    return JSON.parse(raw) as Record<string, TopicProgress>
   } catch {
-    return { ...defaultProgress }
+    return {}
   }
 }
 
-export function saveProgress(progress: TopicProgress) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(progress))
+function saveAllProgress(all: Record<string, TopicProgress>) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(all))
 }
 
-export function getCompletionStatus(): 'not_started' | 'in_progress' | 'completed' {
-  const p = getProgress()
+export function getProgress(topicId: string): TopicProgress {
+  const all = getAllProgress()
+  return all[topicId] ?? { ...defaultProgress }
+}
+
+export function saveProgress(topicId: string, progress: TopicProgress) {
+  const all = getAllProgress()
+  all[topicId] = progress
+  saveAllProgress(all)
+}
+
+export function getCompletionStatus(topicId: string): 'not_started' | 'in_progress' | 'completed' {
+  const p = getProgress(topicId)
   if (p.test.completedAt) return 'completed'
   if (p.theory || p.practice.completed) return 'in_progress'
   return 'not_started'

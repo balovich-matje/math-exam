@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { theorySections } from '../data/theory'
+import { useNavigate, useParams } from 'react-router-dom'
+import { getTopicById } from '../data/topics'
 import { getProgress, saveProgress } from '../lib/storage'
 import { getTelegram } from '../lib/telegram'
 import Math from '../components/Math'
@@ -8,6 +8,8 @@ import ProgressBar from '../components/ProgressBar'
 
 export default function Theory() {
   const navigate = useNavigate()
+  const { topicId } = useParams<{ topicId: string }>()
+  const topic = getTopicById(topicId!)
 
   useEffect(() => {
     const tg = getTelegram()
@@ -20,10 +22,10 @@ export default function Theory() {
     tg.MainButton.setText('Я готов к тесту')
     tg.MainButton.show()
     const onMain = () => {
-      const p = getProgress()
+      const p = getProgress(topicId!)
       p.theory = true
-      saveProgress(p)
-      navigate('/topic/6/practice')
+      saveProgress(topicId!, p)
+      navigate(`/topic/${topicId}/practice`)
     }
     tg.MainButton.onClick(onMain)
 
@@ -33,13 +35,15 @@ export default function Theory() {
       tg.MainButton.hide()
       tg.MainButton.offClick(onMain)
     }
-  }, [navigate])
+  }, [navigate, topicId])
+
+  if (!topic) return <div className="p-4">Тема не найдена</div>
 
   const handleReady = () => {
-    const p = getProgress()
+    const p = getProgress(topicId!)
     p.theory = true
-    saveProgress(p)
-    navigate('/topic/6/practice')
+    saveProgress(topicId!, p)
+    navigate(`/topic/${topicId}/practice`)
   }
 
   return (
@@ -47,9 +51,9 @@ export default function Theory() {
       <ProgressBar current={1} />
 
       <div className="px-4">
-        <h1 className="text-xl font-bold mb-4">Дроби и степени</h1>
+        <h1 className="text-xl font-bold mb-4">{topic.title}</h1>
 
-        {theorySections.map((section) => (
+        {topic.theory.map((section) => (
           <div key={section.title} className="mb-6">
             <h2 className="text-lg font-semibold mb-2 text-tg-link">{section.title}</h2>
 

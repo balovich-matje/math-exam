@@ -11,6 +11,15 @@ export interface TheorySection {
   examples: { latex: string; explanation: string }[]
 }
 
+export interface TopicData {
+  id: string
+  number: string
+  title: string
+  theory: TheorySection[]
+  practice: Problem[]
+  test: Problem[]
+}
+
 export interface TopicProgress {
   theory: boolean
   practice: { answers: Record<number, number>; score: number; completed: boolean }

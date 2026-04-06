@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { practiceProblems } from '../data/problems'
+import { useNavigate, useParams } from 'react-router-dom'
+import { getTopicById } from '../data/topics'
 import { parseAnswer, isCorrect } from '../lib/check'
 import { getProgress, saveProgress } from '../lib/storage'
 import { getTelegram } from '../lib/telegram'
@@ -9,26 +9,30 @@ import ProgressBar from '../components/ProgressBar'
 
 export default function Practice() {
   const navigate = useNavigate()
+  const { topicId } = useParams<{ topicId: string }>()
+  const topic = getTopicById(topicId!)
+  const problems = topic?.practice ?? []
+
   const [current, setCurrent] = useState(0)
   const [input, setInput] = useState('')
   const [checked, setChecked] = useState(false)
   const [correct, setCorrect] = useState(false)
   const [results, setResults] = useState<boolean[]>([])
-  const allDone = results.length === practiceProblems.length
+  const allDone = results.length === problems.length
 
   useEffect(() => {
     const tg = getTelegram()
     if (!tg) return
 
     tg.BackButton.show()
-    const onBack = () => navigate('/topic/6/theory')
+    const onBack = () => navigate(`/topic/${topicId}/theory`)
     tg.BackButton.onClick(onBack)
 
     return () => {
       tg.BackButton.hide()
       tg.BackButton.offClick(onBack)
     }
-  }, [navigate])
+  }, [navigate, topicId])
 
   useEffect(() => {
     const tg = getTelegram()
@@ -38,11 +42,11 @@ export default function Practice() {
       tg.MainButton.setText('Перейти к тесту')
       tg.MainButton.show()
       const onMain = () => {
-        const p = getProgress()
+        const p = getProgress(topicId!)
         const score = results.filter(Boolean).length
         p.practice = { answers: {}, score, completed: true }
-        saveProgress(p)
-        navigate('/topic/6/test')
+        saveProgress(topicId!, p)
+        navigate(`/topic/${topicId}/test`)
       }
       tg.MainButton.onClick(onMain)
       return () => {
@@ -52,9 +56,11 @@ export default function Practice() {
     } else {
       tg.MainButton.hide()
     }
-  }, [allDone, results, navigate])
+  }, [allDone, results, navigate, topicId])
 
-  const problem = practiceProblems[current]
+  if (!topic) return <div className="p-4">Тема не найдена</div>
+
+  const problem = problems[current]
 
   const handleCheck = () => {
     const parsed = parseAnswer(input)
@@ -69,17 +75,17 @@ export default function Practice() {
     setChecked(false)
     setCorrect(false)
     setInput('')
-    if (current < practiceProblems.length - 1) {
+    if (current < problems.length - 1) {
       setCurrent(current + 1)
     }
   }
 
   const handleGoToTest = () => {
-    const p = getProgress()
+    const p = getProgress(topicId!)
     const score = results.filter(Boolean).length
     p.practice = { answers: {}, score, completed: true }
-    saveProgress(p)
-    navigate('/topic/6/test')
+    saveProgress(topicId!, p)
+    navigate(`/topic/${topicId}/test`)
   }
 
   return (
@@ -92,7 +98,7 @@ export default function Practice() {
         {!allDone ? (
           <div key={current} className="animate-slide-in">
             <p className="text-sm text-tg-hint mb-2">
-              Задача {current + 1} из {practiceProblems.length}
+              Задача {current + 1} из {problems.length}
             </p>
 
             <div className="bg-tg-secondary-bg rounded-xl p-4 mb-4">
@@ -158,7 +164,7 @@ export default function Practice() {
             </p>
             <p className="text-tg-hint mb-6">
               Правильных ответов: {results.filter(Boolean).length} из{' '}
-              {practiceProblems.length}
+              {problems.length}
             </p>
             <button
               onClick={handleGoToTest}

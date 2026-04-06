@@ -15,9 +15,9 @@ export default function App() {
     <div className="min-h-screen bg-tg-bg text-tg-text">
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/topic/6/theory" element={<Theory />} />
-        <Route path="/topic/6/practice" element={<Practice />} />
-        <Route path="/topic/6/test" element={<Test />} />
+        <Route path="/topic/:topicId/theory" element={<Theory />} />
+        <Route path="/topic/:topicId/practice" element={<Practice />} />
+        <Route path="/topic/:topicId/test" element={<Test />} />
       </Routes>
     </div>
   )

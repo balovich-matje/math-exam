@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { testProblems } from '../data/problems'
+import { useNavigate, useParams } from 'react-router-dom'
+import { getTopicById } from '../data/topics'
 import { parseAnswer, isCorrect } from '../lib/check'
 import { getProgress, saveProgress } from '../lib/storage'
 import { getTelegram } from '../lib/telegram'
@@ -9,26 +9,30 @@ import ProgressBar from '../components/ProgressBar'
 
 export default function Test() {
   const navigate = useNavigate()
+  const { topicId } = useParams<{ topicId: string }>()
+  const topic = getTopicById(topicId!)
+  const problems = topic?.test ?? []
+
   const [current, setCurrent] = useState(0)
   const [input, setInput] = useState('')
   const [checked, setChecked] = useState(false)
   const [correct, setCorrect] = useState(false)
   const [results, setResults] = useState<boolean[]>([])
-  const allDone = results.length === testProblems.length
+  const allDone = results.length === problems.length
 
   useEffect(() => {
     const tg = getTelegram()
     if (!tg) return
 
     tg.BackButton.show()
-    const onBack = () => navigate('/topic/6/practice')
+    const onBack = () => navigate(`/topic/${topicId}/practice`)
     tg.BackButton.onClick(onBack)
 
     return () => {
       tg.BackButton.hide()
       tg.BackButton.offClick(onBack)
     }
-  }, [navigate])
+  }, [navigate, topicId])
 
   useEffect(() => {
     const tg = getTelegram()
@@ -39,9 +43,9 @@ export default function Test() {
       tg.MainButton.show()
       const onMain = () => {
         const score = results.filter(Boolean).length
-        const p = getProgress()
+        const p = getProgress(topicId!)
         p.test = { answers: {}, score, completedAt: new Date().toISOString() }
-        saveProgress(p)
+        saveProgress(topicId!, p)
         navigate('/')
       }
       tg.MainButton.onClick(onMain)
@@ -52,9 +56,11 @@ export default function Test() {
     } else {
       tg.MainButton.hide()
     }
-  }, [allDone, results, navigate])
+  }, [allDone, results, navigate, topicId])
 
-  const problem = testProblems[current]
+  if (!topic) return <div className="p-4">Тема не найдена</div>
+
+  const problem = problems[current]
 
   const handleCheck = () => {
     const parsed = parseAnswer(input)
@@ -70,16 +76,16 @@ export default function Test() {
     setChecked(false)
     setCorrect(false)
     setInput('')
-    if (current < testProblems.length - 1) {
+    if (current < problems.length - 1) {
       setCurrent(current + 1)
     }
   }
 
   const handleFinish = () => {
     const score = results.filter(Boolean).length
-    const p = getProgress()
+    const p = getProgress(topicId!)
     p.test = { answers: {}, score, completedAt: new Date().toISOString() }
-    saveProgress(p)
+    saveProgress(topicId!, p)
     navigate('/')
   }
 
@@ -93,7 +99,7 @@ export default function Test() {
         {!allDone ? (
           <div key={current} className="animate-slide-in">
             <p className="text-sm text-tg-hint mb-2">
-              Задача {current + 1} из {testProblems.length}
+              Задача {current + 1} из {problems.length}
             </p>
 
             <div className="bg-tg-secondary-bg rounded-xl p-4 mb-4">
@@ -157,10 +163,10 @@ export default function Test() {
               {results.filter(Boolean).length >= 4 ? '🏆' : results.filter(Boolean).length >= 2 ? '👍' : '💪'}
             </p>
             <p className="text-2xl font-bold mb-2">
-              {results.filter(Boolean).length} из {testProblems.length}
+              {results.filter(Boolean).length} из {problems.length}
             </p>
             <p className="text-tg-hint mb-6">
-              {results.filter(Boolean).length === testProblems.length
+              {results.filter(Boolean).length === problems.length
                 ? 'Отлично! Все ответы верные!'
                 : results.filter(Boolean).length >= 3
                   ? 'Хороший результат! Продолжай в том же духе.'
@@ -168,7 +174,7 @@ export default function Test() {
             </p>
 
             <div className="space-y-2 mb-6">
-              {testProblems.map((p, i) => (
+              {problems.map((p, i) => (
                 <div
                   key={p.id}
                   className={`flex items-center gap-3 p-3 rounded-xl text-sm ${
