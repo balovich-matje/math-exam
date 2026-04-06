@@ -9,6 +9,8 @@
   </head>
   <body>
     <div id="root"></div>
+    <div id="debug" style="padding:20px;color:red;font-size:24px;font-weight:bold;">Loading...</div>
+    <script>window.addEventListener('DOMContentLoaded',()=>{document.getElementById('debug').textContent='HTML loaded, waiting for React...'})</script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

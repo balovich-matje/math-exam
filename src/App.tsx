@@ -9,6 +9,8 @@ import Test from './screens/Test'
 export default function App() {
   useEffect(() => {
     initTelegram()
+    const dbg = document.getElementById('debug')
+    if (dbg) dbg.style.display = 'none'
   }, [])
 
   return (
