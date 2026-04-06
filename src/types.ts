@@ -15,6 +15,7 @@ export interface TopicData {
   id: string
   number: string
   title: string
+  wip?: string
   theory: TheorySection[]
   practice: Problem[]
   test: Problem[]

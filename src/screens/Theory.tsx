@@ -53,6 +53,12 @@ export default function Theory() {
       <div className="px-4">
         <h1 className="text-xl font-bold mb-4">{topic.title}</h1>
 
+        {topic.wip && (
+          <div className="bg-orange-500/10 border border-orange-500/30 rounded-xl p-3 mb-4">
+            <p className="text-sm text-orange-500 font-medium">{topic.wip}</p>
+          </div>
+        )}
+
         {topic.theory.map((section) => (
           <div key={section.title} className="mb-6">
             <h2 className="text-lg font-semibold mb-2 text-tg-link">{section.title}</h2>

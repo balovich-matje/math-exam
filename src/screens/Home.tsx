@@ -37,7 +37,10 @@ export default function Home() {
             >
               <div className="flex items-start justify-between">
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm text-tg-hint mb-0.5">Задание №{topic.number}</p>
+                  <p className="text-sm text-tg-hint mb-0.5">
+                    Задание №{topic.number}
+                    {topic.wip && <span className="ml-2 text-xs text-orange-500 font-medium">WIP</span>}
+                  </p>
                   <h2 className="text-base font-semibold truncate">{topic.title}</h2>
                 </div>
                 {status === 'completed' && <span className="text-lg ml-2 shrink-0">✅</span>}
