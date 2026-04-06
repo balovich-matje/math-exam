@@ -9,14 +9,6 @@
   </head>
   <body>
     <div id="root"></div>
-    <div id="debug" style="padding:20px;color:red;font-size:16px;font-weight:bold;position:fixed;bottom:0;z-index:9999;"></div>
-    <script>
-      window.addEventListener('load', () => {
-        const s = getComputedStyle(document.body);
-        const d = document.getElementById('debug');
-        d.textContent = 'bg=' + s.backgroundColor + ' | text=' + s.color + ' | tg-bg=' + s.getPropertyValue('--tg-theme-bg-color') + ' | tg-text=' + s.getPropertyValue('--tg-theme-text-color');
-      })
-    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

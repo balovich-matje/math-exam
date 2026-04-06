@@ -48,6 +48,12 @@ export function getUserName(): string {
 }
 
 export function initTelegram() {
+  // Telegram puts its auth data in the hash (e.g. #tgWebAppData=...).
+  // This breaks HashRouter which uses the hash for routing. Strip it.
+  if (window.location.hash && !window.location.hash.startsWith('#/')) {
+    window.location.hash = '/'
+  }
+
   const tg = getTelegram()
   if (tg) {
     tg.ready()

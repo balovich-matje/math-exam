@@ -24,14 +24,11 @@ class ErrorBoundary extends React.Component<
 export default function App() {
   useEffect(() => {
     initTelegram()
-    const dbg = document.getElementById('debug')
-    if (dbg) dbg.textContent += ' | React mounted OK'
   }, [])
 
   return (
     <div className="min-h-screen bg-tg-bg text-tg-text">
-      <div style={{color:'lime', fontSize:20, padding:10}}>APP RENDER OK — hash: {window.location.hash || '(empty)'}</div>
-      <ErrorBoundary>
+<ErrorBoundary>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/topic/:topicId/theory" element={<Theory />} />
