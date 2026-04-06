@@ -10,7 +10,7 @@ export default function App() {
   useEffect(() => {
     initTelegram()
     const dbg = document.getElementById('debug')
-    if (dbg) dbg.style.display = 'none'
+    if (dbg) dbg.textContent += ' | React mounted OK'
   }, [])
 
   return (
