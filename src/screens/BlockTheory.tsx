@@ -5,6 +5,7 @@ import { getBlockProgress, saveBlockProgress } from '../lib/blockStorage'
 import { getTelegram } from '../lib/telegram'
 import { InfoCard } from '../types'
 import MathComponent from '../components/Math'
+import TopicTabBar from '../components/TopicTabBar'
 
 // ── Inline rule renderer ─────────────────────────────────────────────────
 // Parses [→ Card Title] markers into tappable link buttons
@@ -199,6 +200,8 @@ export default function BlockTheory() {
   }, [blockIdx])
 
   return (
+    <>
+    <TopicTabBar topicId={topicId!} current="theory" />
     <div ref={scrollRef} className="pb-28 animate-fade-in overflow-y-auto">
       {/* Header */}
       <div className="px-4 pt-4 pb-2">
@@ -289,5 +292,6 @@ export default function BlockTheory() {
         </button>
       </div>
     </div>
+    </>
   )
 }

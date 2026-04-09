@@ -5,6 +5,7 @@ import { getBlockProgress, saveBlockProgress } from '../lib/blockStorage'
 import { getTelegram } from '../lib/telegram'
 import { GeneratedProblem } from '../types'
 import Math from '../components/Math'
+import TopicTabBar from '../components/TopicTabBar'
 
 const PROBLEMS_PER_BLOCK = 2
 const TOLERANCE = 0.001
@@ -89,23 +90,28 @@ export default function BlockPractice() {
 
   if (done) {
     return (
-      <div className="p-4 flex flex-col items-center justify-center min-h-screen animate-fade-in">
-        <div className="text-5xl mb-4">🎉</div>
-        <h2 className="text-2xl font-bold mb-2">Практика завершена!</h2>
-        <p className="text-tg-hint text-center mb-8">Все 7 блоков пройдены. Можно переходить к итоговому тесту.</p>
-        <button
-          onClick={() => navigate(`/topic/${topicId}/test`)}
-          className="w-full py-3 rounded-xl bg-tg-button text-tg-button-text font-semibold text-base min-h-[44px] active:opacity-80"
-        >
-          Перейти к тесту →
-        </button>
-      </div>
+      <>
+        <TopicTabBar topicId={topicId!} current="practice" />
+        <div className="p-4 flex flex-col items-center justify-center animate-fade-in">
+          <div className="text-5xl mb-4 mt-8">🎉</div>
+          <h2 className="text-2xl font-bold mb-2">Практика завершена!</h2>
+          <p className="text-tg-hint text-center mb-8">Все 7 блоков пройдены. Можно переходить к итоговому тесту.</p>
+          <button
+            onClick={() => navigate(`/topic/${topicId}/test`)}
+            className="w-full py-3 rounded-xl bg-tg-button text-tg-button-text font-semibold text-base min-h-[44px] active:opacity-80"
+          >
+            Перейти к тесту →
+          </button>
+        </div>
+      </>
     )
   }
 
   const block = topic.blocks[blockIdx]
 
   return (
+    <>
+    <TopicTabBar topicId={topicId!} current="practice" />
     <div className="pb-24 animate-fade-in">
       {/* Header */}
       <div className="px-4 pt-4 pb-2">
@@ -187,5 +193,6 @@ export default function BlockPractice() {
         )}
       </div>
     </div>
+    </>
   )
 }

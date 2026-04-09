@@ -5,6 +5,7 @@ import { getBlockProgress, saveBlockProgress } from '../lib/blockStorage'
 import { getTelegram } from '../lib/telegram'
 import { GeneratedProblem } from '../types'
 import Math from '../components/Math'
+import TopicTabBar from '../components/TopicTabBar'
 
 const QUESTIONS_PER_BLOCK = 3
 const TOLERANCE = 0.001
@@ -101,6 +102,8 @@ export default function BlockTest() {
     const weakBlocks = topic.blocks.filter(b => (blockScores[b.id] ?? 0) < QUESTIONS_PER_BLOCK)
 
     return (
+      <>
+      <TopicTabBar topicId={topicId!} current="test" />
       <div className="p-4 animate-fade-in pb-24">
         <div className="text-center mb-6">
           <div className="text-5xl mb-3">{passed ? '🏆' : '📊'}</div>
@@ -164,6 +167,7 @@ export default function BlockTest() {
           </div>
         )}
       </div>
+      </>
     )
   }
 
@@ -172,6 +176,8 @@ export default function BlockTest() {
   const progress = ((current) / total) * 100
 
   return (
+    <>
+    <TopicTabBar topicId={topicId!} current="test" locked />
     <div className="pb-24 animate-fade-in">
       {/* Header */}
       <div className="px-4 pt-4 pb-2">
@@ -219,5 +225,6 @@ export default function BlockTest() {
         )}
       </div>
     </div>
+    </>
   )
 }
