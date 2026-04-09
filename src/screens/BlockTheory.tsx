@@ -42,16 +42,32 @@ function RuleText({
 }
 
 // ── Line renderer (for info card content) ───────────────────────────────
-function InfoLine({ line }: { line: string }) {
-  const isLatex =
-    line.includes('\\') ||
-    line.startsWith('$')
+// Supports:
+//   **bold text**  → rendered as <strong> (no KaTeX)
+//   lines with actual math commands → rendered as KaTeX display
+//   plain text → rendered as <p>
+const MATH_COMMANDS = /\\(dfrac|frac|tfrac|times|div|cdot|Rightarrow|rightarrow|leq|geq|textcolor|underbrace|mathbf|phantom|hline|begin|end|sqrt|text\b)/
 
-  if (isLatex) {
+function InfoLine({ line }: { line: string }) {
+  // LaTeX: contains real math operators
+  if (MATH_COMMANDS.test(line)) {
     return (
       <div className="overflow-x-auto py-1">
         <MathComponent tex={line} display />
       </div>
+    )
+  }
+  // Bold segments with **...**
+  if (line.includes('**')) {
+    const parts = line.split(/(\*\*[^*]+\*\*)/)
+    return (
+      <p className="text-sm text-tg-text leading-snug">
+        {parts.map((p, i) =>
+          p.startsWith('**') && p.endsWith('**')
+            ? <strong key={i}>{p.slice(2, -2)}</strong>
+            : <span key={i}>{p}</span>
+        )}
+      </p>
     )
   }
   return <p className="text-sm text-tg-text leading-snug">{line}</p>

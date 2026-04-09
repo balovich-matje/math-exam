@@ -31,13 +31,13 @@ const blocks: TheoryBlock[] = [
         lines: [
           'НОК(a, b) — наименьшее число, которое делится и на a, и на b без остатка.',
           'Способ — выписывай кратные каждого числа по порядку, пока не найдёшь первое общее:',
-          '\\textbf{НОК(4, 6):}',
-          'Кратные 4: 4, 8, \\mathbf{12}, 16, 20...',
-          'Кратные 6: 6, \\mathbf{12}, 18, 24...',
-          'Первое совпадение: \\mathbf{12}. Значит НОК(4, 6) = 12.',
-          '\\textbf{НОК(3, 5):}',
-          'Кратные 3: 3, 6, 9, 12, \\mathbf{15}...',
-          'Кратные 5: 5, 10, \\mathbf{15}, 20...',
+          '**НОК(4, 6):**',
+          'Кратные 4: 4, 8, **12**, 16, 20...',
+          'Кратные 6: 6, **12**, 18, 24...',
+          'Первое совпадение: **12**. Значит НОК(4, 6) = 12.',
+          '**НОК(3, 5):**',
+          'Кратные 3: 3, 6, 9, 12, **15**...',
+          'Кратные 5: 5, 10, **15**, 20...',
           'НОК(3, 5) = 15.',
           'Полезно помнить: НОК(2,3)=6 · НОК(3,4)=12 · НОК(4,6)=12 · НОК(5,4)=20',
         ],
@@ -71,17 +71,17 @@ const blocks: TheoryBlock[] = [
     examples: [
       {
         latex:
-          '\\dfrac{2}{\\textcolor{blue}{3}} \\times \\dfrac{\\textcolor{blue}{3}}{4}' +
-          '\\;\\xrightarrow{\\div\\,\\textcolor{blue}{3}}\\;' +
-          '\\dfrac{2}{\\textcolor{blue}{1}} \\times \\dfrac{\\textcolor{blue}{1}}{4}' +
+          '\\dfrac{2}{\\textcolor{#60a5fa}{3}} \\times \\dfrac{\\textcolor{#60a5fa}{3}}{4}' +
+          '\\;\\xrightarrow{\\div\\,\\textcolor{#60a5fa}{3}}\\;' +
+          '\\dfrac{2}{\\textcolor{#60a5fa}{1}} \\times \\dfrac{\\textcolor{#60a5fa}{1}}{4}' +
           '= \\dfrac{2}{4} = \\dfrac{1}{2}',
         explanation: 'Тройки выделены синим — они сокращаются (÷3). Числа одного цвета — сокращаем их между собой.',
       },
       {
         latex:
-          '\\dfrac{\\textcolor{red}{5}}{6} \\times \\dfrac{3}{\\textcolor{red}{10}}' +
-          '\\;\\xrightarrow{\\div\\,\\textcolor{red}{5}}\\;' +
-          '\\dfrac{\\textcolor{red}{1}}{6} \\times \\dfrac{3}{\\textcolor{red}{2}}' +
+          '\\dfrac{\\textcolor{#f87171}{5}}{6} \\times \\dfrac{3}{\\textcolor{#f87171}{10}}' +
+          '\\;\\xrightarrow{\\div\\,\\textcolor{#f87171}{5}}\\;' +
+          '\\dfrac{\\textcolor{#f87171}{1}}{6} \\times \\dfrac{3}{\\textcolor{#f87171}{2}}' +
           '= \\dfrac{3}{12} = \\dfrac{1}{4}',
         explanation: 'Сокращаем 5 и 10 на 5 (красным): 5→1, 10→2. Затем умножаем.',
       },
@@ -115,8 +115,8 @@ const blocks: TheoryBlock[] = [
       },
       {
         latex:
-          '4\\,\\dfrac{\\textcolor{red}{1}}{6} - 1\\,\\dfrac{\\textcolor{red}{5}}{6}:' +
-          '\\quad \\textcolor{red}{\\tfrac{1}{6} < \\tfrac{5}{6}}' +
+          '4\\,\\dfrac{\\textcolor{#f87171}{1}}{6} - 1\\,\\dfrac{\\textcolor{#f87171}{5}}{6}:' +
+          '\\quad \\textcolor{#f87171}{\\tfrac{1}{6} < \\tfrac{5}{6}}' +
           '\\Rightarrow 4\\,\\dfrac{1}{6} = 3\\,\\dfrac{7}{6}',
         explanation: 'Красным отмечено: 1/6 < 5/6 — нужно занять. Берём 1 у четвёрки: 4 → 3, и добавляем 6/6 к дроби: 1/6 + 6/6 = 7/6.',
       },
@@ -131,10 +131,10 @@ const blocks: TheoryBlock[] = [
         lines: [
           'Если дробная часть уменьшаемого меньше, чем вычитаемого — нельзя вычесть напрямую.',
           'Займи 1 у целой части и прибавь её к дробной (в виде знаменатель/знаменатель):',
-          '\\textbf{Шаг 1.} Определи: дробная часть уменьшаемого < дробной части вычитаемого?',
-          '\\textbf{Шаг 2.} Уменьши целую часть на 1.',
-          '\\textbf{Шаг 3.} К дробной части прибавь 1 = знаменатель/знаменатель.',
-          '\\textbf{Пример:} 5\\dfrac{1}{4} - 2\\dfrac{3}{4}',
+          '**Шаг 1.** Определи: дробная часть уменьшаемого < дробной части вычитаемого?',
+          '**Шаг 2.** Уменьши целую часть на 1.',
+          '**Шаг 3.** К дробной части прибавь 1 = знаменатель/знаменатель.',
+          '**Пример:** 5¼ − 2¾',
           '\\tfrac{1}{4} < \\tfrac{3}{4} \\Rightarrow \\text{ занимаем}',
           '5\\dfrac{1}{4} = 4\\dfrac{4}{4} + \\dfrac{1}{4} = 4\\dfrac{5}{4}',
           '4\\dfrac{5}{4} - 2\\dfrac{3}{4} = 2\\dfrac{2}{4} = 2\\dfrac{1}{2}',
@@ -143,15 +143,19 @@ const blocks: TheoryBlock[] = [
       {
         title: 'Смешанная ↔ неправильная',
         lines: [
-          '\\textbf{Смешанная → неправильная:}',
+          '**Смешанная → неправильная:**',
           'a\\dfrac{b}{c} = \\dfrac{a \\cdot c + b}{c}',
           'Умножь целую часть на знаменатель, прибавь числитель — это новый числитель.',
-          'Пример: 2\\dfrac{3}{4} = \\dfrac{2 \\cdot 4 + 3}{4} = \\dfrac{8 + 3}{4} = \\dfrac{11}{4}',
-          'Пример: 3\\dfrac{2}{5} = \\dfrac{3 \\cdot 5 + 2}{5} = \\dfrac{17}{5}',
-          '\\textbf{Неправильная → смешанная:}',
+          '**Пример 1:**',
+          '2\\dfrac{3}{4} = \\dfrac{2 \\cdot 4 + 3}{4} = \\dfrac{8 + 3}{4} = \\dfrac{11}{4}',
+          '**Пример 2:**',
+          '3\\dfrac{2}{5} = \\dfrac{3 \\cdot 5 + 2}{5} = \\dfrac{17}{5}',
+          '**Неправильная → смешанная:**',
           'Раздели числитель на знаменатель. Частное — целая часть, остаток — числитель.',
-          'Пример: \\dfrac{11}{4} \\Rightarrow 11 \\div 4 = 2 \\text{ (ост. 3)} \\Rightarrow 2\\dfrac{3}{4}',
-          'Пример: \\dfrac{17}{5} \\Rightarrow 17 \\div 5 = 3 \\text{ (ост. 2)} \\Rightarrow 3\\dfrac{2}{5}',
+          '**Пример 3:**',
+          '\\dfrac{11}{4} \\Rightarrow 11 \\div 4 = 2 \\text{ (ост. 3)} \\Rightarrow 2\\dfrac{3}{4}',
+          '**Пример 4:**',
+          '\\dfrac{17}{5} \\Rightarrow 17 \\div 5 = 3 \\text{ (ост. 2)} \\Rightarrow 3\\dfrac{2}{5}',
         ],
       },
     ],
@@ -181,12 +185,14 @@ const blocks: TheoryBlock[] = [
       {
         title: 'Смешанная ↔ неправильная',
         lines: [
-          '\\textbf{Смешанная → неправильная:}',
+          '**Смешанная → неправильная:**',
           'a\\dfrac{b}{c} = \\dfrac{a \\cdot c + b}{c}',
           'Умножь целую часть на знаменатель, прибавь числитель.',
-          'Пример: 2\\dfrac{3}{4} = \\dfrac{2 \\cdot 4 + 3}{4} = \\dfrac{11}{4}',
-          'Пример: 1\\dfrac{1}{2} = \\dfrac{1 \\cdot 2 + 1}{2} = \\dfrac{3}{2}',
-          '\\textbf{Неправильная → смешанная:}',
+          '**Пример 1:**',
+          '2\\dfrac{3}{4} = \\dfrac{2 \\cdot 4 + 3}{4} = \\dfrac{11}{4}',
+          '**Пример 2:**',
+          '1\\dfrac{1}{2} = \\dfrac{1 \\cdot 2 + 1}{2} = \\dfrac{3}{2}',
+          '**Неправильная → смешанная:**',
           '\\dfrac{11}{4} \\Rightarrow 11 \\div 4 = 2 \\text{ (ост. 3)} \\Rightarrow 2\\dfrac{3}{4}',
         ],
       },
@@ -207,10 +213,10 @@ const blocks: TheoryBlock[] = [
         latex:
           '3{,}14 + 2{,}7 \\rightarrow 2{,}7 = 2{,}70 \\rightarrow' +
           '\\begin{array}{r}' +
-          '\\phantom{+}3\\textcolor{red}{{,}}14 \\\\' +
-          '+\\;2\\textcolor{red}{{,}}70 \\\\' +
+          '\\phantom{+}3\\textcolor{#f87171}{{,}}14 \\\\' +
+          '+\\;2\\textcolor{#f87171}{{,}}70 \\\\' +
           '\\hline' +
-          '5\\textcolor{red}{{,}}84' +
+          '5\\textcolor{#f87171}{{,}}84' +
           '\\end{array}',
         explanation: 'Красным — запятые на одном уровне. 2,7 дополняем до 2,70.',
       },
@@ -218,10 +224,10 @@ const blocks: TheoryBlock[] = [
         latex:
           '5{,}3 - 1{,}75 \\rightarrow 5{,}3 = 5{,}30 \\rightarrow' +
           '\\begin{array}{r}' +
-          '\\phantom{-}5\\textcolor{red}{{,}}30 \\\\' +
-          '-\\;1\\textcolor{red}{{,}}75 \\\\' +
+          '\\phantom{-}5\\textcolor{#f87171}{{,}}30 \\\\' +
+          '-\\;1\\textcolor{#f87171}{{,}}75 \\\\' +
           '\\hline' +
-          '3\\textcolor{red}{{,}}55' +
+          '3\\textcolor{#f87171}{{,}}55' +
           '\\end{array}',
         explanation: 'Дополняем 5,3 до 5,30. Вычитаем в столбик, не забыв про «занятие».',
       },
@@ -229,10 +235,10 @@ const blocks: TheoryBlock[] = [
         latex:
           '0{,}8 + 0{,}45 \\rightarrow 0{,}8 = 0{,}80 \\rightarrow' +
           '\\begin{array}{r}' +
-          '\\phantom{+}0\\textcolor{red}{{,}}80 \\\\' +
-          '+\\;0\\textcolor{red}{{,}}45 \\\\' +
+          '\\phantom{+}0\\textcolor{#f87171}{{,}}80 \\\\' +
+          '+\\;0\\textcolor{#f87171}{{,}}45 \\\\' +
           '\\hline' +
-          '1\\textcolor{red}{{,}}25' +
+          '1\\textcolor{#f87171}{{,}}25' +
           '\\end{array}',
         explanation: 'Дополняем 0,8 до 0,80. Результат > 1 — перенос в целую часть.',
       },
@@ -250,34 +256,34 @@ const blocks: TheoryBlock[] = [
     examples: [
       {
         latex:
-          '\\underbrace{2{,}\\textcolor{blue}{4}}_{\\textcolor{blue}{1}\\text{ зн.}}' +
+          '\\underbrace{2{,}\\textcolor{#60a5fa}{4}}_{\\textcolor{#60a5fa}{1}\\text{ зн.}}' +
           '\\times' +
-          '\\underbrace{1{,}\\textcolor{red}{5}}_{\\textcolor{red}{1}\\text{ зн.}}' +
+          '\\underbrace{1{,}\\textcolor{#f87171}{5}}_{\\textcolor{#f87171}{1}\\text{ зн.}}' +
           '\\;\\Rightarrow\\; 24 \\times 15 = 360' +
-          '\\;\\Rightarrow\\; \\underbrace{3{,}60}_{\\textcolor{blue}{1}+\\textcolor{red}{1}=2\\text{ зн.}} = 3{,}6',
+          '\\;\\Rightarrow\\; \\underbrace{3{,}60}_{\\textcolor{#60a5fa}{1}+\\textcolor{#f87171}{1}=2\\text{ зн.}} = 3{,}6',
         explanation: 'Синий: 1 знак после запятой. Красный: 1 знак. Итого 1+1=2 знака → ставим запятую за 2 цифрами справа: 360 → 3,60.',
       },
       {
         latex:
-          '\\underbrace{0{,}\\textcolor{blue}{3}}_{\\textcolor{blue}{1}\\text{ зн.}}' +
+          '\\underbrace{0{,}\\textcolor{#60a5fa}{3}}_{\\textcolor{#60a5fa}{1}\\text{ зн.}}' +
           '\\times' +
-          '\\underbrace{0{,}\\textcolor{red}{12}}_{\\textcolor{red}{2}\\text{ зн.}}' +
+          '\\underbrace{0{,}\\textcolor{#f87171}{12}}_{\\textcolor{#f87171}{2}\\text{ зн.}}' +
           '\\;\\Rightarrow\\; 3 \\times 12 = 36' +
-          '\\;\\Rightarrow\\; \\underbrace{0{,}036}_{\\textcolor{blue}{1}+\\textcolor{red}{2}=3\\text{ зн.}}',
+          '\\;\\Rightarrow\\; \\underbrace{0{,}036}_{\\textcolor{#60a5fa}{1}+\\textcolor{#f87171}{2}=3\\text{ зн.}}',
         explanation: '1+2=3 знака в ответе. 36 → 036 → 0,036 (дописываем ноль слева).',
       },
       {
         latex:
-          '3{,}6 \\div \\underbrace{0{,}12}_{\\times\\,\\textcolor{blue}{100}}' +
+          '3{,}6 \\div \\underbrace{0{,}12}_{\\times\\,\\textcolor{#60a5fa}{100}}' +
           '\\;=\\;' +
-          '\\underbrace{360}_{\\times\\,\\textcolor{blue}{100}} \\div 12 = 30',
+          '\\underbrace{360}_{\\times\\,\\textcolor{#60a5fa}{100}} \\div 12 = 30',
         explanation: 'Умножаем оба на 100 (делитель 0,12 становится целым 12). 360 ÷ 12 = 30.',
       },
       {
         latex:
-          '7{,}2 \\div \\underbrace{0{,}9}_{\\times\\,\\textcolor{blue}{10}}' +
+          '7{,}2 \\div \\underbrace{0{,}9}_{\\times\\,\\textcolor{#60a5fa}{10}}' +
           '\\;=\\;' +
-          '\\underbrace{72}_{\\times\\,\\textcolor{blue}{10}} \\div 9 = 8',
+          '\\underbrace{72}_{\\times\\,\\textcolor{#60a5fa}{10}} \\div 9 = 8',
         explanation: 'Умножаем оба на 10. 72 ÷ 9 = 8.',
       },
     ],
