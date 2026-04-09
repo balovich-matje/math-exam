@@ -29,11 +29,17 @@ export interface GeneratedProblem {
   hint: string
 }
 
+export interface InfoCard {
+  title: string
+  lines: string[]  // plain text or LaTeX (detected by presence of '\\')
+}
+
 export interface TheoryBlock {
   id: string
   title: string
-  rules: string[]
+  rules: string[]  // may contain [→ Card Title] for clickable links to info cards
   examples: { latex: string; explanation: string }[]
+  infoCards?: InfoCard[]
 }
 
 export interface BlockTopicData {
