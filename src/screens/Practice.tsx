@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getTopicById } from '../data/topics'
+import { TopicData } from '../types'
 import { parseAnswer, isCorrect } from '../lib/check'
 import { getProgress, saveProgress } from '../lib/storage'
 import { getTelegram } from '../lib/telegram'
@@ -10,7 +11,7 @@ import ProgressBar from '../components/ProgressBar'
 export default function Practice() {
   const navigate = useNavigate()
   const { topicId } = useParams<{ topicId: string }>()
-  const topic = getTopicById(topicId!)
+  const topic = getTopicById(topicId!) as TopicData | undefined
   const problems = topic?.practice ?? []
 
   const [current, setCurrent] = useState(0)

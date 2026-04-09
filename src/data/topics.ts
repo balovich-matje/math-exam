@@ -1,4 +1,9 @@
-import { TopicData } from '../types'
+import { TopicData, BlockTopicData } from '../types'
+
+export type AnyTopic = TopicData | BlockTopicData
+export function isBlockTopic(t: AnyTopic): t is BlockTopicData {
+  return 'format' in t && t.format === 'blocks'
+}
 import topic1_5 from './topics/topic1_5'
 import topic6 from './topics/topic6'
 import topic7 from './topics/topic7'
@@ -18,7 +23,7 @@ import topic20 from './topics/topic20'
 import topic21 from './topics/topic21'
 import topic23 from './topics/topic23'
 
-export const allTopics: TopicData[] = [
+export const allTopics: AnyTopic[] = [
   topic1_5,
   topic6,
   topic7,
@@ -39,6 +44,6 @@ export const allTopics: TopicData[] = [
   topic23,
 ]
 
-export function getTopicById(id: string): TopicData | undefined {
+export function getTopicById(id: string): AnyTopic | undefined {
   return allTopics.find((t) => t.id === id)
 }

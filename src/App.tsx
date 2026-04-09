@@ -1,10 +1,30 @@
 import React, { useEffect } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useParams } from 'react-router-dom'
 import { initTelegram } from './lib/telegram'
+import { getTopicById, isBlockTopic } from './data/topics'
 import Home from './screens/Home'
 import Theory from './screens/Theory'
 import Practice from './screens/Practice'
 import Test from './screens/Test'
+import BlockTheory from './screens/BlockTheory'
+import BlockPractice from './screens/BlockPractice'
+import BlockTest from './screens/BlockTest'
+
+function TheoryRouter() {
+  const { topicId } = useParams<{ topicId: string }>()
+  const topic = getTopicById(topicId!)
+  return topic && isBlockTopic(topic) ? <BlockTheory /> : <Theory />
+}
+function PracticeRouter() {
+  const { topicId } = useParams<{ topicId: string }>()
+  const topic = getTopicById(topicId!)
+  return topic && isBlockTopic(topic) ? <BlockPractice /> : <Practice />
+}
+function TestRouter() {
+  const { topicId } = useParams<{ topicId: string }>()
+  const topic = getTopicById(topicId!)
+  return topic && isBlockTopic(topic) ? <BlockTest /> : <Test />
+}
 
 class ErrorBoundary extends React.Component<
   { children: React.ReactNode },
@@ -31,9 +51,9 @@ export default function App() {
 <ErrorBoundary>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/topic/:topicId/theory" element={<Theory />} />
-          <Route path="/topic/:topicId/practice" element={<Practice />} />
-          <Route path="/topic/:topicId/test" element={<Test />} />
+          <Route path="/topic/:topicId/theory" element={<TheoryRouter />} />
+          <Route path="/topic/:topicId/practice" element={<PracticeRouter />} />
+          <Route path="/topic/:topicId/test" element={<TestRouter />} />
         </Routes>
       </ErrorBoundary>
     </div>

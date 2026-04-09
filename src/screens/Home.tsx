@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom'
 import { getUserName } from '../lib/telegram'
 import { getCompletionStatus, getProgress } from '../lib/storage'
-import { allTopics } from '../data/topics'
+import { blockTopicStatus, getBlockProgress } from '../lib/blockStorage'
+import { allTopics, isBlockTopic } from '../data/topics'
 
 export default function Home() {
   const navigate = useNavigate()
@@ -14,14 +15,22 @@ export default function Home() {
 
       <div className="space-y-3">
         {allTopics.map((topic) => {
-          const status = getCompletionStatus(topic.id)
-          const progress = getProgress(topic.id)
+          let status: 'not_started' | 'in_progress' | 'completed'
+          let statusLabel: string
 
-          const statusLabel = {
-            not_started: 'Не начато',
-            in_progress: 'В процессе',
-            completed: `Результат: ${progress.test.score}/${topic.test.length}`,
-          }[status]
+          if (isBlockTopic(topic)) {
+            status = blockTopicStatus(topic.id)
+            const bp = getBlockProgress(topic.id)
+            statusLabel = status === 'completed'
+              ? `Тест пройден: ${bp.test.score}/${topic.blocks.length * 3}`
+              : status === 'in_progress' ? 'В процессе' : 'Не начато'
+          } else {
+            status = getCompletionStatus(topic.id)
+            const progress = getProgress(topic.id)
+            statusLabel = status === 'completed'
+              ? `Результат: ${progress.test.score}/${topic.test.length}`
+              : status === 'in_progress' ? 'В процессе' : 'Не начато'
+          }
 
           const statusColor = {
             not_started: 'text-tg-hint',
@@ -39,7 +48,7 @@ export default function Home() {
                 <div className="flex-1 min-w-0">
                   <p className="text-sm text-tg-hint mb-0.5">
                     Задание №{topic.number}
-                    {topic.wip && <span className="ml-2 text-xs text-orange-500 font-medium">WIP</span>}
+                    {'wip' in topic && topic.wip && <span className="ml-2 text-xs text-orange-500 font-medium">WIP</span>}
                   </p>
                   <h2 className="text-base font-semibold truncate">{topic.title}</h2>
                 </div>

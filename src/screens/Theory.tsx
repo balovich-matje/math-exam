@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getTopicById } from '../data/topics'
+import { TopicData } from '../types'
 import { getProgress, saveProgress } from '../lib/storage'
 import { getTelegram } from '../lib/telegram'
 import Math from '../components/Math'
@@ -9,7 +10,7 @@ import ProgressBar from '../components/ProgressBar'
 export default function Theory() {
   const navigate = useNavigate()
   const { topicId } = useParams<{ topicId: string }>()
-  const topic = getTopicById(topicId!)
+  const topic = getTopicById(topicId!) as TopicData | undefined
 
   useEffect(() => {
     const tg = getTelegram()
