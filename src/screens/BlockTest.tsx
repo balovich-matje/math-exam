@@ -45,6 +45,7 @@ export default function BlockTest() {
 
   if (!topic || !isBlockTopic(topic)) return <div className="p-4">Тема не найдена</div>
 
+  const [started, setStarted] = useState(false)
   const [questions] = useState<TestQuestion[]>(() => buildTest(topic))
   const [current, setCurrent] = useState(0)
   const [answers, setAnswers] = useState<(number | null)[]>(Array(questions.length).fill(null))
@@ -167,6 +168,45 @@ export default function BlockTest() {
           </div>
         )}
       </div>
+      </>
+    )
+  }
+
+  // ── Confirmation screen ─────────────────────────────────────────────────
+
+  if (!started) {
+    return (
+      <>
+        <TopicTabBar topicId={topicId!} current="test" />
+        <div className="p-4 animate-fade-in">
+          <div className="text-center mt-8 mb-6">
+            <div className="text-5xl mb-3">📝</div>
+            <h2 className="text-2xl font-bold mb-2">Итоговый тест</h2>
+            <p className="text-tg-hint text-sm">
+              {topic.blocks.length * QUESTIONS_PER_BLOCK} вопросов · {topic.blocks.length} блоков · по {QUESTIONS_PER_BLOCK} вопроса на блок
+            </p>
+          </div>
+
+          <div className="bg-orange-500/10 border border-orange-500/30 rounded-xl p-4 mb-6 space-y-1.5">
+            <p className="text-orange-500 font-semibold text-sm">Важно:</p>
+            <p className="text-sm text-tg-hint">• После начала нельзя выйти до конца теста</p>
+            <p className="text-sm text-tg-hint">• Для зачёта нужно ответить верно на все вопросы</p>
+            <p className="text-sm text-tg-hint">• Пропущенный ответ = неверный</p>
+          </div>
+
+          <button
+            onClick={() => setStarted(true)}
+            className="w-full py-3 rounded-xl bg-tg-button text-tg-button-text font-semibold text-base min-h-[44px] active:opacity-80"
+          >
+            Начать тест →
+          </button>
+          <button
+            onClick={() => navigate(`/topic/${topicId}/practice`)}
+            className="w-full py-3 rounded-xl text-tg-hint font-semibold text-sm min-h-[44px] active:opacity-70 mt-2"
+          >
+            ← Вернуться к практике
+          </button>
+        </div>
       </>
     )
   }
