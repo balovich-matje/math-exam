@@ -1,95 +1,14 @@
-import { TopicData } from '../../types'
+import { BlockTopicData } from '../../types'
+import blocks from '../topic12/blocks'
+import { GENERATORS } from '../topic12/generators'
 
-const topic12: TopicData = {
+const topic12: BlockTopicData = {
   id: '12',
   number: '12',
   title: 'Расчёты по формулам',
-  theory: [
-    {
-      title: 'Подстановка значений в формулу',
-      rules: [
-        'Внимательно читаем, что дано и что нужно найти.',
-        'Подставляем числовые значения в формулу и вычисляем.',
-        'Если нужно найти не результат, а параметр — выражаем его из формулы.',
-      ],
-      examples: [
-        {
-          latex: 't_F = 1{,}8 \\cdot t_C + 32 = 1{,}8 \\cdot (-45) + 32 = -81 + 32 = -49',
-          explanation: 'Переводим −45°C в шкалу Фаренгейта.',
-        },
-        {
-          latex: 't_C = \\dfrac{5}{9}(t_F - 32) = \\dfrac{5}{9}(113 - 32) = \\dfrac{5}{9} \\cdot 81 = 45',
-          explanation: 'Переводим 113°F в шкалу Цельсия.',
-        },
-      ],
-    },
-    {
-      title: 'Выражение переменной из формулы',
-      rules: [
-        'P = I^2 R \\Rightarrow R = \\dfrac{P}{I^2} — делим обе части на I^2.',
-        'a = \\omega^2 R \\Rightarrow R = \\dfrac{a}{\\omega^2} — делим обе части на \\omega^2.',
-        'C = C_0 + k \\cdot n \\Rightarrow n = \\dfrac{C - C_0}{k}.',
-      ],
-      examples: [
-        {
-          latex: 'R = \\dfrac{P}{I^2} = \\dfrac{101{,}25}{4{,}5^2} = \\dfrac{101{,}25}{20{,}25} = 5 \\text{ Ом}',
-          explanation: 'Выражаем R из формулы мощности и подставляем значения.',
-        },
-      ],
-    },
-  ],
-  practice: [
-    {
-      id: 1,
-      text: 'Стоимость поездки C = 150 + 11(t − 5). Рассчитайте стоимость 8-минутной поездки (в рублях).',
-      latex: 'C = 150 + 11(t - 5), \\quad t = 8',
-      answer: 183,
-    },
-    {
-      id: 2,
-      text: 'Переведите −23°C в шкалу Фаренгейта по формуле tF = 1,8·tC + 32.',
-      latex: 't_F = 1{,}8 \\cdot (-23) + 32',
-      answer: -9.4,
-    },
-    {
-      id: 3,
-      text: 'Переведите 149°F в шкалу Цельсия по формуле tC = 5/9·(tF − 32).',
-      latex: 't_C = \\dfrac{5}{9}(149 - 32)',
-      answer: 65,
-    },
-  ],
-  test: [
-    {
-      id: 1,
-      text: 'Стоимость колодца C = 6000 + 4100n. Рассчитайте стоимость колодца из 20 колец (в рублях).',
-      latex: 'C = 6000 + 4100 \\cdot 20',
-      answer: 88000,
-    },
-    {
-      id: 2,
-      text: 'Стоимость колодца C = 6500 + 4000n. Рассчитайте стоимость колодца из 11 колец (в рублях).',
-      latex: 'C = 6500 + 4000 \\cdot 11',
-      answer: 50500,
-    },
-    {
-      id: 3,
-      text: 'Переведите −45°C в шкалу Фаренгейта: tF = 1,8·tC + 32.',
-      latex: 't_F = 1{,}8 \\cdot (-45) + 32',
-      answer: -49,
-    },
-    {
-      id: 4,
-      text: 'Переведите 59°F в шкалу Цельсия: tC = 5/9·(tF − 32).',
-      latex: 't_C = \\dfrac{5}{9}(59 - 32)',
-      answer: 15,
-    },
-    {
-      id: 5,
-      text: 'Переведите 35°C в шкалу Фаренгейта: tF = 1,8·tC + 32.',
-      latex: 't_F = 1{,}8 \\cdot 35 + 32',
-      answer: 95,
-    },
-  ],
+  format: 'blocks',
+  blocks,
+  generators: [...GENERATORS],
 }
 
 export default topic12

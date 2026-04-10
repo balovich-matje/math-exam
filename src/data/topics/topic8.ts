@@ -1,101 +1,14 @@
-import { TopicData } from '../../types'
+import { BlockTopicData } from '../../types'
+import blocks from '../topic8/blocks'
+import { GENERATORS } from '../topic8/generators'
 
-const topic8: TopicData = {
+const topic8: BlockTopicData = {
   id: '8',
   number: '8',
   title: 'Квадратные корни и степени',
-  theory: [
-    {
-      title: 'Квадратные корни',
-      rules: [
-        '\\sqrt{a \\cdot b} = \\sqrt{a} \\cdot \\sqrt{b}, \\quad \\sqrt{\\dfrac{a}{b}} = \\dfrac{\\sqrt{a}}{\\sqrt{b}}',
-        '\\sqrt{a^2} = |a| — квадратный корень из квадрата равен модулю числа.',
-        '(\\sqrt{a})^2 = a \\text{ при } a \\geq 0',
-        '\\sqrt{a^{2n}} = a^n \\text{ при } a \\geq 0 — показатель делим на 2.',
-      ],
-      examples: [
-        {
-          latex: '\\sqrt{\\dfrac{64a^{10}}{a^6}} = \\sqrt{64a^4} = 8a^2 = 8 \\cdot 5^2 = 200 \\quad (a = 5)',
-          explanation: 'Сокращаем степени под корнем, затем извлекаем корень.',
-        },
-        {
-          latex: '(\\sqrt{28} - \\sqrt{7}) \\cdot \\sqrt{7} = \\sqrt{196} - \\sqrt{49} = 14 - 7 = 7',
-          explanation: 'Умножаем каждое слагаемое на корень из 7, упрощаем.',
-        },
-        {
-          latex: '\\dfrac{\\sqrt{54}}{\\sqrt{6}} = \\sqrt{\\dfrac{54}{6}} = \\sqrt{9} = 3',
-          explanation: 'Объединяем корни в один и сокращаем дробь.',
-        },
-      ],
-    },
-    {
-      title: 'Формулы сокращённого умножения с корнями',
-      rules: [
-        '(\\sqrt{a} - b)(\\sqrt{a} + b) = a - b^2 — разность квадратов.',
-        '(\\sqrt{a} + b)^2 = a + 2b\\sqrt{a} + b^2 — квадрат суммы.',
-        '\\sqrt{a^2 + 2ab + b^2} = \\sqrt{(a + b)^2} = |a + b|',
-      ],
-      examples: [
-        {
-          latex: '(\\sqrt{23} - 4)(\\sqrt{23} + 4) = 23 - 16 = 7',
-          explanation: 'Применяем формулу разности квадратов.',
-        },
-        {
-          latex: '(2 + \\sqrt{11})^2 + (2 - \\sqrt{11})^2 = 4 + 4\\sqrt{11} + 11 + 4 - 4\\sqrt{11} + 11 = 30',
-          explanation: 'Раскрываем квадраты, корни сокращаются.',
-        },
-      ],
-    },
-    {
-      title: 'Свойства степеней',
-      rules: [
-        'a^m \\cdot a^n = a^{m+n} — при умножении степени складываются.',
-        'a^m : a^n = a^{m-n} — при делении степени вычитаются.',
-        '(a^m)^n = a^{m \\cdot n} — при возведении в степень показатели перемножаются.',
-        'a^{-n} = \\dfrac{1}{a^n}, \\quad \\dfrac{1}{a^{-n}} = a^n — отрицательный показатель.',
-      ],
-      examples: [
-        {
-          latex: '\\dfrac{a^7 \\cdot a^6}{a^{11}} = \\dfrac{a^{13}}{a^{11}} = a^2 = 5^2 = 25 \\quad (a = 5)',
-          explanation: 'Складываем показатели в числителе, затем вычитаем показатель знаменателя.',
-        },
-        {
-          latex: '\\dfrac{(a^5)^4}{a^{17}} = \\dfrac{a^{20}}{a^{17}} = a^3 = 4^3 = 64 \\quad (a = 4)',
-          explanation: 'Умножаем показатели при возведении степени в степень, затем вычитаем.',
-        },
-      ],
-    },
-    {
-      title: 'Степени с отрицательными показателями и числовые степени',
-      rules: [
-        '\\dfrac{a^{-m} \\cdot a^{-n}}{a^{-k}} = a^{-m-n+k} — работаем по общим правилам.',
-        '\\dfrac{1}{a^{-n}} \\cdot \\dfrac{1}{a^m} = a^n \\cdot a^{-m} = a^{n-m}',
-        '\\dfrac{(a \\cdot b)^n}{a^k \\cdot b^n} = a^{n-k} — выделяем одинаковые основания.',
-      ],
-      examples: [
-        {
-          latex: '\\dfrac{5^{-4} \\cdot 5^{-12}}{5^{-17}} = 5^{-4 + (-12) - (-17)} = 5^{-16+17} = 5^1 = 5',
-          explanation: 'Складываем показатели в числителе и вычитаем показатель знаменателя.',
-        },
-        {
-          latex: '\\dfrac{9^5}{27^3} = \\dfrac{(3^2)^5}{(3^3)^3} = \\dfrac{3^{10}}{3^9} = 3^1 = 3',
-          explanation: 'Приводим к одному основанию 3, затем вычитаем показатели.',
-        },
-      ],
-    },
-  ],
-  practice: [
-    { id: 1, text: 'Найдите значение выражения:', latex: '(\\sqrt{45} - \\sqrt{5}) \\cdot \\sqrt{5}', answer: 10 },
-    { id: 2, text: 'Найдите значение выражения:', latex: '\\dfrac{(a^7)^2}{a^{12}} \\text{ при } a = 5', answer: 25 },
-    { id: 3, text: 'Найдите значение выражения:', latex: '\\dfrac{9^{-6} \\cdot 9^{15}}{9^7}', answer: 81 },
-  ],
-  test: [
-    { id: 1, text: 'Найдите значение выражения:', latex: 'a^8 \\cdot a^{17} : a^{20} \\text{ при } a = 2', answer: 32 },
-    { id: 2, text: 'Найдите значение выражения:', latex: '\\dfrac{\\sqrt{51} \\cdot \\sqrt{12}}{\\sqrt{17}}', answer: 6 },
-    { id: 3, text: 'Найдите значение выражения:', latex: '(\\sqrt{31} - 3)(\\sqrt{31} + 3)', answer: 22 },
-    { id: 4, text: 'Найдите значение выражения:', latex: '\\dfrac{(4\\sqrt{3})^2}{60}', answer: 0.8 },
-    { id: 5, text: 'Найдите значение выражения:', latex: '\\sqrt{a^2 - 4ab + 4b^2} \\text{ при } a = 3,\\; b = 4', answer: 5 },
-  ],
+  format: 'blocks',
+  blocks,
+  generators: [...GENERATORS],
 }
 
 export default topic8
