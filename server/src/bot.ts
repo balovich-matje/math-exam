@@ -3,8 +3,19 @@ import db from './db/index.js'
 
 const WEB_APP_URL = 'https://balovich-matje.github.io/math-exam/'
 
-/** Set up bot commands and menu button */
+/** Set up bot commands, descriptions, and menu button */
 export async function setupBot() {
+  // Bot profile description (shown before user presses Start)
+  await tgApi('setMyDescription', {
+    description: 'Бесплатный тренажёр для подготовки к ОГЭ по математике 2026.\n\n📐 25 заданий с теорией и генерацией задач\n📝 Задания №1–5 — бесплатно\n⭐ Полный доступ — 10 Stars\n\nНажми «Start» чтобы начать!',
+  })
+
+  // Short description (shown in bot search results and sharing)
+  await tgApi('setMyShortDescription', {
+    short_description: 'Подготовка к ОГЭ по математике 2026 — теория, практика, тесты. Задания 1–5 бесплатно!',
+  })
+
+  // Commands menu
   await tgApi('setMyCommands', {
     commands: [
       { command: 'start', description: 'Начать подготовку к ОГЭ' },
@@ -12,6 +23,7 @@ export async function setupBot() {
     ],
   })
 
+  // Menu button → opens WebApp
   await tgApi('setChatMenuButton', {
     menu_button: {
       type: 'web_app',

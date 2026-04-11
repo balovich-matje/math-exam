@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
+import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react'
 import { authTelegram, getToken, fetchSubscription } from './api'
 import { getInitData } from './telegram'
 import { syncProgressFromServer } from './blockStorage'
@@ -8,6 +8,7 @@ interface AuthState {
   authenticated: boolean
   plan: 'free' | 'paid'
   error: string | null
+  refreshPlan: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthState>({
@@ -15,6 +16,7 @@ const AuthContext = createContext<AuthState>({
   authenticated: false,
   plan: 'free',
   error: null,
+  refreshPlan: async () => {},
 })
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -23,7 +25,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     authenticated: !!getToken(),
     plan: 'free',
     error: null,
+    refreshPlan: async () => {},
   })
+
+  const refreshPlan = useCallback(async () => {
+    try {
+      const sub = await fetchSubscription()
+      const plan = sub.plan !== 'free' && sub.active ? 'paid' as const : 'free' as const
+      setState(prev => ({ ...prev, plan }))
+    } catch {}
+  }, [])
 
   useEffect(() => {
     async function init() {
@@ -34,12 +45,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           try {
             await authTelegram(initData)
           } catch (err: any) {
-            setState({ ready: true, authenticated: false, plan: 'free', error: err.message })
+            setState(prev => ({ ...prev, ready: true, authenticated: false, plan: 'free', error: err.message, refreshPlan }))
             return
           }
         } else {
           // Not in Telegram — anonymous, free only
-          setState({ ready: true, authenticated: false, plan: 'free', error: null })
+          setState(prev => ({ ...prev, ready: true, authenticated: false, plan: 'free', error: null, refreshPlan }))
           return
         }
       }
@@ -53,11 +64,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const plan = sub.status === 'fulfilled' && sub.value.plan !== 'free' && sub.value.active
         ? 'paid' as const
         : 'free' as const
-      setState({ ready: true, authenticated: true, plan, error: null })
+      setState({ ready: true, authenticated: true, plan, error: null, refreshPlan })
     }
 
     init()
-  }, [])
+  }, [refreshPlan])
 
   return <AuthContext.Provider value={state}>{children}</AuthContext.Provider>
 }

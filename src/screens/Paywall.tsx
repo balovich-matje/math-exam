@@ -2,9 +2,11 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { createInvoiceLink } from '../lib/api'
 import { getTelegram } from '../lib/telegram'
+import { useAuth } from '../lib/AuthContext'
 
 export default function Paywall() {
   const navigate = useNavigate()
+  const { refreshPlan } = useAuth()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -18,16 +20,17 @@ export default function Paywall() {
         setError('Откройте приложение через Telegram')
         return
       }
-      tg.openInvoice(invoiceLink, (status) => {
+      tg.openInvoice(invoiceLink, async (status) => {
         if (status === 'paid') {
-          window.location.reload()
+          await refreshPlan()
+          navigate('/')
         } else if (status === 'failed') {
           setError('Оплата не прошла. Попробуйте ещё раз.')
         }
+        setLoading(false)
       })
     } catch (err: any) {
       setError(err.message || 'Ошибка при создании платежа')
-    } finally {
       setLoading(false)
     }
   }
