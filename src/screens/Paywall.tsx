@@ -188,7 +188,7 @@ export default function Paywall() {
       <div className="w-full bg-tg-secondary-bg rounded-2xl p-4 mb-6">
         <div className="flex items-center justify-between mb-3">
           <span className="font-semibold">Полный доступ</span>
-          <span className="text-lg font-bold">⭐ 10 Stars</span>
+          <span className="text-lg font-bold">⭐ 1 000 Stars</span>
         </div>
         <ul className="text-sm text-tg-hint space-y-1.5">
           <li>✓ Все 25 заданий ОГЭ</li>
@@ -204,7 +204,7 @@ export default function Paywall() {
         onClick={handleBuy}
         className="w-full py-3 rounded-xl bg-tg-button text-tg-button-text font-semibold text-base min-h-[44px] active:opacity-70"
       >
-        ⭐ Оплатить 10 Stars
+        ⭐ Оплатить 1 000 Stars
       </button>
 
       <button

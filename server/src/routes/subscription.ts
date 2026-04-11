@@ -3,8 +3,7 @@ import db from '../db/index.js'
 import { requireAuth } from '../middleware/auth.js'
 import { tgApi } from '../tgApi.js'
 
-// TODO: set to 1500 for production
-const STARS_PRICE = 10
+const STARS_PRICE = 1000
 
 const router = Router()
 router.use(requireAuth)

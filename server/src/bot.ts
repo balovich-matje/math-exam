@@ -7,7 +7,7 @@ const WEB_APP_URL = 'https://balovich-matje.github.io/math-exam/'
 export async function setupBot() {
   // Bot profile description (shown before user presses Start)
   await tgApi('setMyDescription', {
-    description: 'Бесплатный тренажёр для подготовки к ОГЭ по математике 2026.\n\n📐 25 заданий с теорией и генерацией задач\n📝 Задания №1–5 — бесплатно\n⭐ Полный доступ — 10 Stars\n\nНажми «Start» чтобы начать!',
+    description: 'Бесплатный тренажёр для подготовки к ОГЭ по математике 2026.\n\n📐 25 заданий с теорией и генерацией задач\n📝 Задания №1–5 — бесплатно\n⭐ Полный доступ — 1 000 Stars\n\nНажми «Start» чтобы начать!',
   })
 
   // Short description (shown in bot search results and sharing)
