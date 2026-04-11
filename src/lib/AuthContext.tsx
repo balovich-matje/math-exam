@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import { authTelegram, getToken, fetchSubscription } from './api'
 import { getInitData } from './telegram'
+import { syncProgressFromServer } from './blockStorage'
 
 interface AuthState {
   ready: boolean
@@ -43,15 +44,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
       }
 
-      // Step 2: check subscription
-      try {
-        const sub = await fetchSubscription()
-        const plan = sub.plan !== 'free' && sub.active ? 'paid' as const : 'free' as const
-        setState({ ready: true, authenticated: true, plan, error: null })
-      } catch {
-        // Token might be expired — still let them use free tier
-        setState({ ready: true, authenticated: true, plan: 'free', error: null })
-      }
+      // Step 2: sync progress from server + check subscription
+      const [sub] = await Promise.allSettled([
+        fetchSubscription(),
+        syncProgressFromServer(),
+      ])
+
+      const plan = sub.status === 'fulfilled' && sub.value.plan !== 'free' && sub.value.active
+        ? 'paid' as const
+        : 'free' as const
+      setState({ ready: true, authenticated: true, plan, error: null })
     }
 
     init()

@@ -5,6 +5,43 @@ import { blockTopicStatus, getBlockProgress } from '../lib/blockStorage'
 import { allTopics, isBlockTopic } from '../data/topics'
 import { useAuth, isTopicFree } from '../lib/AuthContext'
 
+function ProgressDashboard() {
+  let completed = 0
+  let inProgress = 0
+  let total = 0
+
+  for (const topic of allTopics) {
+    total++
+    const s = isBlockTopic(topic)
+      ? blockTopicStatus(topic.id)
+      : getCompletionStatus(topic.id)
+    if (s === 'completed') completed++
+    else if (s === 'in_progress') inProgress++
+  }
+
+  const pct = total > 0 ? Math.round((completed / total) * 100) : 0
+
+  return (
+    <div className="bg-tg-secondary-bg rounded-2xl p-4 mb-4">
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-sm font-semibold">Общий прогресс</span>
+        <span className="text-sm font-bold text-tg-button">{pct}%</span>
+      </div>
+      <div className="w-full h-2 bg-tg-hint/20 rounded-full overflow-hidden mb-2">
+        <div
+          className="h-full bg-tg-button rounded-full transition-all"
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+      <div className="flex gap-4 text-xs text-tg-hint">
+        <span>✅ Пройдено: {completed}</span>
+        <span>📝 В процессе: {inProgress}</span>
+        <span>Всего: {total}</span>
+      </div>
+    </div>
+  )
+}
+
 export default function Home() {
   const navigate = useNavigate()
   const name = getUserName()
@@ -14,6 +51,8 @@ export default function Home() {
     <div className="p-4 animate-fade-in">
       <h1 className="text-2xl font-bold mb-1">Привет, {name}!</h1>
       <p className="text-tg-hint mb-4">Подготовка к ОГЭ по математике</p>
+
+      <ProgressDashboard />
 
       <div className="space-y-3">
         {allTopics.map((topic, idx) => {
