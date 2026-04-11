@@ -33,6 +33,7 @@ declare global {
             username?: string
           }
         }
+        initData: string
         themeParams: Record<string, string>
       }
     }
@@ -45,6 +46,10 @@ export function getTelegram() {
 
 export function getUserName(): string {
   return getTelegram()?.initDataUnsafe?.user?.first_name ?? 'Ученик'
+}
+
+export function getInitData(): string {
+  return getTelegram()?.initData ?? ''
 }
 
 export function initTelegram() {
