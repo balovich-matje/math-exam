@@ -64,3 +64,7 @@ export async function saveProgress(topicId: string, data: unknown) {
 export async function fetchSubscription() {
   return request<{ plan: string; active: boolean; expiresAt?: string }>('/subscription')
 }
+
+export async function createInvoiceLink() {
+  return request<{ invoiceLink: string }>('/subscription/invoice', { method: 'POST' })
+}

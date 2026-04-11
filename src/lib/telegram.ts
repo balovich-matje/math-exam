@@ -26,6 +26,7 @@ declare global {
           onClick: (cb: () => void) => void
           offClick: (cb: () => void) => void
         }
+        openInvoice: (url: string, callback?: (status: string) => void) => void
         initDataUnsafe: {
           user?: {
             first_name: string

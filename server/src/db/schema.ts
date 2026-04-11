@@ -27,4 +27,15 @@ export const MIGRATIONS = [
     expires_at TEXT,
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
   )`,
+
+  // v2: payments audit log
+  `CREATE TABLE IF NOT EXISTS payments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL REFERENCES users(id),
+    telegram_payment_charge_id TEXT NOT NULL UNIQUE,
+    provider_payment_charge_id TEXT NOT NULL DEFAULT '',
+    amount INTEGER NOT NULL,
+    currency TEXT NOT NULL DEFAULT 'XTR',
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+  )`,
 ]
