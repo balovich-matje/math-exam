@@ -1,0 +1,19 @@
+{
+  "name": "ОГЭ Математика 2026",
+  "short_name": "ОГЭ Мат",
+  "description": "Подготовка к ОГЭ по математике — теория, практика, тесты",
+  "start_url": "/math-exam/",
+  "scope": "/math-exam/",
+  "display": "standalone",
+  "background_color": "#1a1a2e",
+  "theme_color": "#2563eb",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
