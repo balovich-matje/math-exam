@@ -1,4 +1,5 @@
 import { BlockTopicProgress } from '../types'
+import { getToken, saveProgress as apiSaveProgress } from './api'
 
 const KEY = 'oge_block_progress'
 
@@ -29,6 +30,11 @@ export function saveBlockProgress(topicId: string, p: BlockTopicProgress) {
   const all = getAll()
   all[topicId] = p
   saveAll(all)
+
+  // Background sync to server (fire and forget)
+  if (getToken()) {
+    apiSaveProgress(topicId, p).catch(() => {})
+  }
 }
 
 export function blockTopicStatus(topicId: string): 'not_started' | 'in_progress' | 'completed' {
