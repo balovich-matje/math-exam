@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Routes, Route, useParams } from 'react-router-dom'
 import { initTelegram } from './lib/telegram'
 import { getTopicById, isBlockTopic } from './data/topics'
@@ -11,6 +11,8 @@ import BlockTheory from './screens/BlockTheory'
 import BlockPractice from './screens/BlockPractice'
 import BlockTest from './screens/BlockTest'
 import Paywall from './screens/Paywall'
+import Onboarding from './screens/Onboarding'
+import Privacy from './screens/Privacy'
 
 /** Gate: redirect to /paywall if topic is paid and user is free */
 function PaidGate({ children }: { children: React.ReactNode }) {
@@ -57,22 +59,36 @@ class ErrorBoundary extends React.Component<
 }
 
 export default function App() {
+  const [showOnboarding, setShowOnboarding] = useState(
+    () => !localStorage.getItem('onboarding_done')
+  )
+
   useEffect(() => {
     initTelegram()
   }, [])
 
+  const completeOnboarding = () => {
+    localStorage.setItem('onboarding_done', '1')
+    setShowOnboarding(false)
+  }
+
   return (
     <AuthProvider>
       <div className="min-h-screen bg-tg-bg text-tg-text">
+        {showOnboarding ? (
+          <Onboarding onComplete={completeOnboarding} />
+        ) : (
         <ErrorBoundary>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/paywall" element={<Paywall />} />
+            <Route path="/privacy" element={<Privacy />} />
             <Route path="/topic/:topicId/theory" element={<PaidGate><TheoryRouter /></PaidGate>} />
             <Route path="/topic/:topicId/practice" element={<PaidGate><PracticeRouter /></PaidGate>} />
             <Route path="/topic/:topicId/test" element={<PaidGate><TestRouter /></PaidGate>} />
           </Routes>
         </ErrorBoundary>
+        )}
       </div>
     </AuthProvider>
   )

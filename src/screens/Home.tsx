@@ -120,6 +120,13 @@ export default function Home() {
           )
         })}
       </div>
+
+      <button
+        onClick={() => navigate('/privacy')}
+        className="w-full text-center text-xs text-tg-hint/50 mt-6 mb-2 active:opacity-70"
+      >
+        Политика конфиденциальности
+      </button>
     </div>
   )
 }
