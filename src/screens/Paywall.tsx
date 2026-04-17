@@ -179,10 +179,10 @@ export default function Paywall() {
       <div className="text-5xl mb-4">🔒</div>
       <h2 className="text-2xl font-bold mb-2 text-center">Платный раздел</h2>
       <p className="text-tg-hint text-center mb-2">
-        Задания №6–25 доступны по подписке.
+        Задания №7–25 доступны по подписке.
       </p>
       <p className="text-tg-hint text-center mb-6 text-sm">
-        Бесплатно: задания №1–5 с полной теорией, практикой и тестами.
+        Бесплатно: задания №1–6 с полной теорией, практикой и тестами.
       </p>
 
       <div className="w-full bg-tg-secondary-bg rounded-2xl p-4 mb-6">

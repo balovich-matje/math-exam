@@ -77,8 +77,8 @@ export function useAuth() {
   return useContext(AuthContext)
 }
 
-/** Topics 1-5 are free, 6+ require paid subscription */
+/** Topics 1-6 are free, 7+ require paid subscription */
 export function isTopicFree(topicNumber: string): boolean {
   const num = parseInt(topicNumber, 10)
-  return num >= 1 && num <= 5
+  return num >= 1 && num <= 6
 }
