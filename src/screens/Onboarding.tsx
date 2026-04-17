@@ -46,7 +46,7 @@ export default function Onboarding({ onComplete }: Props) {
       </button>
 
       <p className="text-xs text-tg-hint text-center mt-3">
-        Задания №1–6 — бесплатно
+        Задания №1–5 — бесплатно
       </p>
     </div>
   )
