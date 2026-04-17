@@ -23,6 +23,20 @@ function loadEnv() {
 
 loadEnv()
 
-export const BOT_TOKEN = process.env.BOT_TOKEN!
-export const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret'
+const NODE_ENV = process.env.NODE_ENV || 'development'
+const isDev = NODE_ENV === 'development'
+
+function requireEnv(name: string): string {
+  const value = process.env[name]?.trim()
+  if (value) return value
+
+  if (!isDev) {
+    throw new Error(`Missing required environment variable: ${name}`)
+  }
+
+  return ''
+}
+
+export const BOT_TOKEN = requireEnv('BOT_TOKEN')
+export const JWT_SECRET = process.env.JWT_SECRET?.trim() || (isDev ? 'dev-secret' : requireEnv('JWT_SECRET'))
 export const PORT = parseInt(process.env.PORT || '3001', 10)

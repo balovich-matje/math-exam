@@ -22,6 +22,10 @@ jobs:
         with:
           node-version: 20
           cache: npm
+      - name: Require VITE_API_URL repository variable
+        run: |
+          test -n "${{ vars.VITE_API_URL }}" || { echo "Missing repository variable VITE_API_URL"; exit 1; }
+          printf 'VITE_API_URL=%s\n' "${{ vars.VITE_API_URL }}" > .env.production
       - run: npm ci
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
